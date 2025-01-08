@@ -20,7 +20,6 @@ def get_currency_rate(currency: str, amount: int = 1) -> Dict[str, Union[str, fl
     response = requests.get(url, headers=headers)
     status_code = response.status_code
 
-
     if status_code == 200:
         content = response.json()
 
@@ -49,23 +48,20 @@ def get_stock_price(stock: str) -> Dict[str, Union[str, float]]:
     headers = {"apikey": STOCK_API_KEY}
     url = f'https://api.polygon.io/v2/aggs/ticker/{stock}/range/1/day/{start_date}/{stop_date}?apiKey={STOCK_API_KEY}'
 
-
     response = requests.get(url, headers=headers)
 
     status_code = response.status_code
 
     if status_code == 200:
         content = response.json()
-        print(content)
 
-        if content['results'][0]['c']:
-            result = {"stock": stock, "price": content['results'][0]['c']}
+        if content['status'] == 'OK' and content['results'][0]['c']:
+            result = {"stock": stock, "price": round(content['results'][0]['c'], 2)}
 
             return result
 
+        else:
+            raise Exception("Нет данных о цене для данной акции.")
+
     else:
         raise Exception(f'Запрос не был успешным. Возможная причина: {response.reason}')
-
-if __name__ == '__main__':
-    #print(get_currency_rate('USD'))
-    print(get_stock_price('AAPL'))
