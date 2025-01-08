@@ -1,9 +1,6 @@
 import json
-from typing import List
 
 import pandas as pd
-
-from settings import EXCEL_PATH
 
 
 def get_xlsx(file_path: str) -> list[dict]:
@@ -14,7 +11,7 @@ def get_xlsx(file_path: str) -> list[dict]:
 
         df = pd.read_excel(file_path)
         if isinstance(df, pd.DataFrame) and not df.empty:
-            return df.to_dict(orient='records')
+            return df.to_dict(orient="records")
 
         else:
             return []
@@ -23,7 +20,7 @@ def get_xlsx(file_path: str) -> list[dict]:
         return []
 
 
-def get_json_currencies(file_path: str) -> List[str]:
+def get_json_currencies(file_path: str) -> list:
     """
     Функция, принимающая путь к JSON файлу и возвращающая список данных из файла.
     """
@@ -36,7 +33,6 @@ def get_json_currencies(file_path: str) -> List[str]:
 
         return result
 
-
     except json.JSONDecodeError as ex:
         raise ValueError(f"Ошибка при чтении файла: {ex}")
 
@@ -44,7 +40,7 @@ def get_json_currencies(file_path: str) -> List[str]:
         raise Exception(f"Ошибка при чтении файла: {ex}")
 
 
-def get_json_stocks(file_path: str) -> List[str]:
+def get_json_stocks(file_path: str) -> list:
     """
     Функция, принимающая путь к JSON файлу и возвращающая список данных из файла.
     """
@@ -57,10 +53,8 @@ def get_json_stocks(file_path: str) -> List[str]:
 
             return result
 
-
     except json.JSONDecodeError as ex:
         raise ValueError(f"Ошибка при чтении файла: {ex}")
-
 
     except Exception as ex:
         raise Exception(f"Ошибка при чтении файла: {ex}")
