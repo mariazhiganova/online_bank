@@ -1,11 +1,15 @@
 import json
+import logging
 from datetime import datetime
 
+from logging_config import setup_logging
 from settings import EXCEL_PATH, JSON_PATH
 from src.external_api import get_currency_rate, get_stock_price
 from src.utils import get_json_currencies, get_json_stocks, get_xlsx
 from src.views import get_card_info, get_top_transactions, greetings, sort_by_date
 
+setup_logging()
+logger = logging.getLogger('external_api')
 
 def views_main(date: str) -> str:
     """
