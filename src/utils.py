@@ -43,6 +43,8 @@ def get_json_currencies(file_path: str) -> list:
     """
     Функция, принимающая путь к JSON файлу и возвращающая список данных из файла.
     """
+    result = []
+
     try:
         logger.info('Попытка открыть JSON файл')
 
@@ -57,6 +59,9 @@ def get_json_currencies(file_path: str) -> list:
                 logger.info('Список необходимых данных получен')
 
                 result = data["user_currencies"]
+
+            else:
+                logger.error('Ключ не найден')
 
         return result
 
@@ -75,6 +80,8 @@ def get_json_stocks(file_path: str) -> list:
     """
     Функция, принимающая путь к JSON файлу и возвращающая список данных из файла.
     """
+    result = []
+
     try:
 
         logger.info('Попытка открыть JSON файл')
@@ -90,6 +97,9 @@ def get_json_stocks(file_path: str) -> list:
 
                 logger.info('Ключ найден.')
                 logger.info('Список необходимых данных получен')
+
+            else:
+                logger.error('Ключ не найден')
 
             return result
 
