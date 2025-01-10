@@ -518,3 +518,8 @@ def result_of_stocks_failed():
         '{"ticker": "GOOGL", "queryCount": 0, "resultsCount": 0, "adjusted": true, '
         '"status": "DELAYED", "request_id": "0222db913d482bdd764ab88d7a4e5a92"}'
     )
+
+
+@pytest.fixture
+def result_cashback_categories():
+    return """{"Рестораны": 8.58, "Супермаркеты": 2.6, "Такси": 1.3}"""

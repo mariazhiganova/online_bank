@@ -6,7 +6,10 @@ from settings import LOG_PATH
 
 os.makedirs('logs', exist_ok=True)
 
-def setup_logging():
+def setup_logging() -> None:
+    """
+    Функция, формирующая логгер
+    """
     logger = logging.getLogger('my_log')
     logger.setLevel(logging.DEBUG)
     file_handler = logging.FileHandler(LOG_PATH, mode="w", encoding="utf-8")

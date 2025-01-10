@@ -1,7 +1,9 @@
-from unittest.mock import patch, mock_open
+from unittest.mock import mock_open, patch
+
 import pandas as pd
 import pytest
-from src.utils import get_xlsx, get_json_currencies, get_json_stocks
+
+from src.utils import get_json_currencies, get_json_stocks, get_xlsx
 
 
 @patch("pandas.read_excel")

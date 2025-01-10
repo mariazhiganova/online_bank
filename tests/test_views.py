@@ -1,5 +1,6 @@
-from src.views import greetings, sort_by_date, get_card_info, get_top_transactions
 import pytest
+
+from src.views import get_card_info, get_top_transactions, greetings, sort_by_date
 
 
 @pytest.mark.parametrize(
