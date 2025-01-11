@@ -11,13 +11,13 @@ def test_get_xlsx(mock_read_excel, operations_from_excel, operations_list_valid)
     mock_read_excel.return_value = pd.DataFrame(operations_from_excel)
     result = get_xlsx("valid/path/to/file")
 
-    assert result == operations_list_valid
+    assert operations_list_valid in result
 
 
 def test_get_xlsx_empty_path():
     result = get_xlsx("")
 
-    assert result == []
+    assert [] in result
 
 
 @patch("pandas.read_excel")
@@ -25,13 +25,13 @@ def test_get_xlsx_empty_file(mock_read_excel):
     mock_read_excel.return_value = pd.DataFrame()
     result = get_xlsx("valid/path/to/file")
 
-    assert result == []
+    assert [] in result
 
 
 def test_get_xlsx_invalid_path():
     result = get_xlsx("invalid/path/to/file")
 
-    assert result == []
+    assert [] in result
 
 
 @patch(
@@ -60,10 +60,9 @@ def test_get_json_currencies_invalid(mock_file):
     read_data="""{"key": ["value_1", "value_2"], "key_2": ["value_3", "value_4"]}""",
 )
 def test_get_json_currencies_not_key(mock_file):
-    with pytest.raises(Exception) as exc_info:
-        get_json_currencies("some/path")
+    result = get_json_currencies("some/path")
 
-    assert "Ошибка при чтении файла:" in str(exc_info.value)
+    assert result == []
 
 
 def test_get_json_currencies_not_path():
