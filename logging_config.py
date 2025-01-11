@@ -11,7 +11,7 @@ def setup_logging() -> None:
     Функция, формирующая логгер
     """
     logger = logging.getLogger('my_log')
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.WARNING)
     file_handler = logging.FileHandler(LOG_PATH, mode="w", encoding="utf-8")
     file_formatter = logging.Formatter("%(asctime)s - %(filename)s - %(levelname)s: %(message)s")
     file_handler.setFormatter(file_formatter)
