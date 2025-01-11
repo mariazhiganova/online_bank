@@ -5,7 +5,7 @@ from datetime import datetime, time, timedelta
 from logging_config import setup_logging
 
 setup_logging()
-logger = logging.getLogger('my_log')
+logger = logging.getLogger("my_log")
 
 
 def greetings(actual_time: str) -> str:
@@ -15,7 +15,7 @@ def greetings(actual_time: str) -> str:
     """
     try:
 
-        logger.info('Из переданной строки с датой создаем DataFrame')
+        logger.info("Из переданной строки с датой создаем DataFrame")
 
         date_obj = datetime.strptime(actual_time, "%H:%M:%S")
 
@@ -26,7 +26,7 @@ def greetings(actual_time: str) -> str:
         comparison_day = time(12, 0)
         comparison_evening = time(17, 0)
 
-        logger.info('Определяем какое приветствие подойдет для текущего времени суток')
+        logger.info("Определяем какое приветствие подойдет для текущего времени суток")
 
         if comparison_night <= date_obj.time() < comparison_morning:
             greet = greets[3]
@@ -40,13 +40,13 @@ def greetings(actual_time: str) -> str:
         else:
             greet = greets[2]
 
-        logger.info('Приветствие определено успешно')
+        logger.info("Приветствие определено успешно")
 
         return greet
 
     except ValueError:
 
-        logger.error('Передано неверное время')
+        logger.error("Передано неверное время")
 
         raise ValueError("Неверный формат времени")
 
@@ -60,11 +60,11 @@ def sort_by_date(operations_list: list[dict], input_date: str) -> str | list[dic
 
     result = []
 
-    logger.info('Проверяем переданную дату на корректный формат')
+    logger.info("Проверяем переданную дату на корректный формат")
 
     if input_date and pattern.fullmatch(input_date):
 
-        logger.info('Формат даты корректный')
+        logger.info("Формат даты корректный")
 
         day_int = int(input_date[:2])
 
@@ -72,7 +72,7 @@ def sort_by_date(operations_list: list[dict], input_date: str) -> str | list[dic
 
         start = input_date_obj - timedelta(days=(day_int - 1))
         stop = input_date_obj
-        logger.info('Фильтруем операции по дате')
+        logger.info("Фильтруем операции по дате")
         for operation in operations_list:
             operation_date_obj = datetime.strptime(operation["Дата операции"], "%d.%m.%Y %H:%M:%S").date()
 
@@ -81,7 +81,7 @@ def sort_by_date(operations_list: list[dict], input_date: str) -> str | list[dic
 
     else:
 
-        logger.warning('Введена неверная дата')
+        logger.warning("Введена неверная дата")
 
         print("Введена неверная дата. Введите дату в формате ДД.ММ.ГГГГ")
 
@@ -100,7 +100,7 @@ def get_card_info(operations_list: list[dict]) -> list[dict]:
     card_data = {}
     pattern = re.compile(r"\*\d{4}")
 
-    logger.info('Определяем номер карты')
+    logger.info("Определяем номер карты")
     for operation in operations_list:
 
         if isinstance(operation["Номер карты"], str) and pattern.fullmatch(operation["Номер карты"]):
@@ -109,11 +109,11 @@ def get_card_info(operations_list: list[dict]) -> list[dict]:
                 card_number = operation["Номер карты"][1:]
                 amount = operation["Сумма операции"]
 
-                logger.info('Проверяем статус каждой операции')
+                logger.info("Проверяем статус каждой операции")
 
                 if operation["Статус"] == "OK" and float(amount) < 0:
                     if card_number not in card_data:
-                        logger.info('Считаем сумму операций по каждой карте')
+                        logger.info("Считаем сумму операций по каждой карте")
 
                         card_data[card_number] = 0.0
 
@@ -121,7 +121,7 @@ def get_card_info(operations_list: list[dict]) -> list[dict]:
 
     result = []
 
-    logger.info('Формируем результат с данными о картах')
+    logger.info("Формируем результат с данными о картах")
 
     for card_num, data in card_data.items():
         last_digits = card_num
@@ -152,11 +152,11 @@ def get_top_transactions(operations_list: list[dict]) -> list[dict]:
         operation for operation in operations_list if "Сумма операции" in operation and operation["Сумма операции"] < 0
     ]
 
-    logger.info('Определяем топ-5 операций по сумме')
+    logger.info("Определяем топ-5 операций по сумме")
 
     top_5 = sorted(negative_transactions, key=lambda x: abs(x["Сумма операции"]), reverse=True)[:n]
 
-    logger.info('Формируем данные для получения топ-5 операций в нужном формате')
+    logger.info("Формируем данные для получения топ-5 операций в нужном формате")
 
     for el in top_5:
         date = el["Дата операции"].split()[0]
