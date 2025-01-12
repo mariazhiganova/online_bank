@@ -5,11 +5,14 @@ from datetime import datetime
 from logging_config import setup_logging
 from settings import EXCEL_PATH, JSON_PATH
 from src.external_api import get_currency_rate, get_stock_price
+from src.reports import spending_by_category
+from src.services import get_profitable_cashback_categories
 from src.utils import get_json_currencies, get_json_stocks, get_xlsx
 from src.views import get_card_info, get_top_transactions, greetings, sort_by_date
 
 setup_logging()
 logger = logging.getLogger('external_api')
+
 
 def views_main(date: str) -> str:
     """
@@ -20,7 +23,6 @@ def views_main(date: str) -> str:
     correct_date = actual_date.strftime("%d.%m.%Y")
     correct_time = actual_date.strftime("%H:%M:%S")
 
-    operations_list = get_xlsx(EXCEL_PATH)
     sort_operations_list = sort_by_date(operations_list, correct_date)
 
     greeting = greetings(correct_time)
@@ -43,5 +45,9 @@ def views_main(date: str) -> str:
 
 
 if __name__ == "__main__":
+    operations_list, df = get_xlsx(EXCEL_PATH)
     my_date = (datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
-    print(views_main(my_date))
+    json_main = views_main(my_date)
+    services_main = get_profitable_cashback_categories(operations_list, '2022', '04')
+
+    spending_by_category(df, 'Рестораны', '25.02.2024')
