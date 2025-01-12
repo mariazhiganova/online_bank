@@ -1,10 +1,11 @@
-import os
 import logging
 import logging.config
 
 from settings import LOG_PATH
 
-os.makedirs('logs', exist_ok=True)
+log_dir = LOG_PATH.parent
+if not log_dir.exists():
+    log_dir.mkdir(parents=True, exist_ok=True)
 
 def setup_logging() -> None:
     """
