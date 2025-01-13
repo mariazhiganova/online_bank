@@ -30,6 +30,16 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: Option
 
         start_date = stop_date - pd.Timedelta(days=90)
 
+        logger.info('Проверка на наличие необходимых столбцов в датафрейм')
+
+        required_columns = ['Дата платежа', 'Категория', 'Сумма операции']
+        for column in required_columns:
+
+            if column not in transactions.columns:
+                logger.error(f"Отсутствует необходимый столбец: {column}")
+
+                return pd.DataFrame()
+
         logger.info('Преобразование дат операций в объект datatime')
 
         transactions["Дата платежа"] = pd.to_datetime(transactions["Дата платежа"], format="%d.%m.%Y")
@@ -37,11 +47,11 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: Option
         logger.info('Формирование списка операций для формирования отчета')
 
         filtered_transactions = transactions[
-            (transactions["Дата платежа"] >= start_date)
-            & (transactions["Дата платежа"] <= stop_date)
-            & (transactions["Категория"] == category)
-            & (transactions["Сумма операции"] < 0)
-        ]
+            (transactions["Дата платежа"] >= start_date) &
+            (transactions["Дата платежа"] <= stop_date) &
+            (transactions["Категория"] == category) &
+            (transactions["Сумма операции"] < 0)
+            ]
 
         logger.info('Инициализация отчета')
 
