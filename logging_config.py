@@ -7,6 +7,7 @@ log_dir = LOG_PATH.parent
 if not log_dir.exists():
     log_dir.mkdir(parents=True, exist_ok=True)
 
+
 def setup_logging() -> None:
     """
     Функция, формирующая логгер

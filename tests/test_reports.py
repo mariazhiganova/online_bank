@@ -24,6 +24,7 @@ def test_spending_by_category(df, expected):
     result = spending_by_category(df, "Еда", "01.01.2025")
     pd.testing.assert_frame_equal(result, expected)
 
+
 @pytest.mark.parametrize(
     "df, expected",
     [
@@ -43,4 +44,3 @@ def test_spending_by_category(df, expected):
 def test_spending_by_category_not_date(df, expected):
     result = spending_by_category(df, "Еда")
     pd.testing.assert_frame_equal(result, expected)
-
